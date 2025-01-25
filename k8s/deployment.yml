@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-mgmt-deployment
+  namespace: gerald-env
+  labels:
+    app: employee-mgmt
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: employee-mgmt
+  template:
+    metadata:
+      labels:
+        app: employee-mgmt
+    spec:
+      containers:
+        - name: employee-mgmt
+          image: geraldakenji/employee-image:latest 
+          ports:
+            - containerPort: 8080 
+          env:
+            - name: DATABASE_URL
+              value: "your-database-connection-string" 
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
